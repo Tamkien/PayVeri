@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kienct.payveri.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -22,9 +23,13 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val recyclerView = binding.rv
+        val adapter = Adapter()
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
         viewModel.allProjects.observe(this) { projects ->
             // Update the cached copy of the words in the adapter.
-//            projects.let { binding.textMessage.text = it.toString() }
+            projects.let { adapter.submitList(it) }
         }
 
     }
